@@ -1,5 +1,8 @@
 package com.guilhermefgl.inter.service;
 
+import java.util.Collections;
+
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,29 +18,16 @@ public class UniqueDigitService {
 		return result;
 	}
 
-	public Integer uniqueDigit(Integer k, Integer n) {
-		return uniqueDigit(concatInteger(k, n));
+	public Integer uniqueDigit(Integer k, String gidit) {
+		return uniqueDigit(repeatDigits(k, gidit));
 	}
 
-	private String concatInteger(Integer k, Integer n) {
-		StringBuilder digit = new StringBuilder();
-
-		while (k > 0) {
-			digit.append(n);
-			k--;
-		}
-
-		return digit.toString();
+	private String repeatDigits(Integer k, String digit) {
+		return String.join(Strings.EMPTY, Collections.nCopies(k, digit));
 	}
 
 	private Integer sumDigits(String digit) {
-		Integer result = 0;
-
-		for (char c : digit.toCharArray()) {
-			result += Character.digit(c, DECIMAL);
-		}
-
-		return result;
+		return digit.chars().map(c -> Character.digit(c, DECIMAL)).sum();
 	}
 
 }

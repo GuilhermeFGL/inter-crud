@@ -21,16 +21,16 @@ public class UniqueDigitServiceTest {
 	@Test
 	public void testUniqueDigit() {
 		assertEquals(Integer.valueOf(2), service.uniqueDigit("9875"));
-		assertEquals(Integer.valueOf(8), service.uniqueDigit(4, 9875));
+		assertEquals(Integer.valueOf(8), service.uniqueDigit(4, "9875"));
 	}
 
 	@Test
 	public void testConcatInteger() throws NoSuchMethodException, SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		Method method = service.getClass().getDeclaredMethod("concatInteger", Integer.class, Integer.class);
+		Method method = service.getClass().getDeclaredMethod("repeatDigits", Integer.class, String.class);
 		method.setAccessible(true);
 
-		assertEquals("9875987598759875", method.invoke(service, 4, 9875));
+		assertEquals("9875987598759875", method.invoke(service, 4, "9875"));
 	}
 
 	@Test
