@@ -21,7 +21,7 @@ public class DigitController {
 	UniqueDigitService digitService;
 
 	@PostMapping
-	public ResponseEntity<Object> create(@Valid @RequestBody DigitDto digitDto) {
+	public ResponseEntity<Integer> create(@Valid @RequestBody DigitDto digitDto) {
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(digitDto.getK() == null ? digitService.uniqueDigit(digitDto.getN())
 						: digitService.uniqueDigit(digitDto.getK(), digitDto.getN()));
