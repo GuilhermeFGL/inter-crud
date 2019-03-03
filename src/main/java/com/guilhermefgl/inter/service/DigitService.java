@@ -6,7 +6,7 @@ import org.apache.logging.log4j.util.Strings;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UniqueDigitService {
+public class DigitService {
 
 	private static final int DECIMAL = 10;
 

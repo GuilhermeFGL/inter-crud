@@ -3,7 +3,10 @@ package com.guilhermefgl.inter.controller.dto;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+
+import com.guilhermefgl.inter.util.Constants;
 
 public class DigitDto {
 
@@ -11,9 +14,10 @@ public class DigitDto {
 	@Max(1000000)
 	private Integer k;
 
-	@NotEmpty
 	@Min(1)
-	@Pattern(regexp = "\\d+")
+	@NotNull
+	@NotEmpty
+	@Pattern(regexp = Constants.REGEX_DIGIT)
 	private String n;
 
 	public Integer getK() {

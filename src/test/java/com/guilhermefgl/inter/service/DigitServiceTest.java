@@ -13,10 +13,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class UniqueDigitServiceTest {
+public class DigitServiceTest {
 
 	@Autowired
-	private UniqueDigitService service;
+	private DigitService service;
 
 	@Test
 	public void testUniqueDigit() {

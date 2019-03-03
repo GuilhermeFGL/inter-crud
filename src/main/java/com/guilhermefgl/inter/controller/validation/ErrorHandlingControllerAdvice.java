@@ -1,4 +1,4 @@
-package com.guilhermefgl.inter.controller;
+package com.guilhermefgl.inter.controller.validation;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -11,30 +11,27 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.guilhermefgl.inter.util.validation.ValidationErrorResponse;
-import com.guilhermefgl.inter.util.validation.Violation;
-
 @ControllerAdvice
 class ErrorHandlingControllerAdvice {
 
-	@ExceptionHandler(ConstraintViolationException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(ConstraintViolationException.class)
 	ValidationErrorResponse onConstraintValidationException(ConstraintViolationException e) {
 		ValidationErrorResponse error = new ValidationErrorResponse();
 		for (ConstraintViolation<?> violation : e.getConstraintViolations()) {
-			error.getViolations().add(new Violation(violation.getPropertyPath().toString(), violation.getMessage()));
+			error.addErrorMessage(violation.getPropertyPath().toString(), violation.getMessage());
 		}
 		return error;
 	}
 
-	@ExceptionHandler(MethodArgumentNotValidException.class)
-	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
 	ValidationErrorResponse onMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 		ValidationErrorResponse error = new ValidationErrorResponse();
 		for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
-			error.getViolations().add(new Violation(fieldError.getField(), fieldError.getDefaultMessage()));
+			error.addErrorMessage(fieldError.getField(), fieldError.getDefaultMessage());
 		}
 		return error;
 	}
