@@ -62,7 +62,7 @@ public class UserController {
 			User updatedUser = service.save(UserMapper.toModel(userDto));
 			return ResponseEntity.status(HttpStatus.OK).body(UserMapper.toDto(updatedUser));
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
 	}
 
@@ -74,7 +74,7 @@ public class UserController {
 			service.delete(user.get());
 			return ResponseEntity.status(HttpStatus.OK).body(null);
 		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
 		}
 	}
 
