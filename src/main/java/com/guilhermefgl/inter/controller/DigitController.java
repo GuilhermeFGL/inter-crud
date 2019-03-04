@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +36,7 @@ public class DigitController {
 	private UserService userService;
 
 	@GetMapping
-	public ResponseEntity<List<DigitDto>> list(@RequestHeader("user") Long userId) {
+	public ResponseEntity<List<DigitDto>> list(@Nullable @RequestHeader("user") Long userId) {
 		List<Digit> digits = new ArrayList<>();
 		if (userId != null) {
 			Optional<User> userOtp = userService.find(userId);
@@ -50,7 +51,8 @@ public class DigitController {
 	}
 
 	@PostMapping
-	public ResponseEntity<Integer> create(@Valid @RequestBody DigitDto digitDto, @RequestHeader("user") Long userId) {
+	public ResponseEntity<Integer> create(@Valid @RequestBody DigitDto digitDto,
+			@Nullable @RequestHeader("user") Long userId) {
 		User user = null;
 		if (userId != null) {
 			Optional<User> userOpt = userService.find(userId);
@@ -68,7 +70,7 @@ public class DigitController {
 		digit.setUser(user);
 		digitService.save(digit);
 
-		return ResponseEntity.status(HttpStatus.OK).body(result);
+		return ResponseEntity.status(HttpStatus.CREATED).body(result);
 	}
 
 }

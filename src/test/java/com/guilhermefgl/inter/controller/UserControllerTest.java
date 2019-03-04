@@ -29,6 +29,7 @@ public class UserControllerTest {
 
 	private static final String URL_BASE = "/api/usuario";
 	private static final String PARAMETER_ID = "/{id}";
+	private static final int ID_INVALID = -1;
 
 	@Autowired
 	private UserRepository repository;
@@ -62,7 +63,7 @@ public class UserControllerTest {
 
 	@Test
 	public void testFind_whenNotFound_thenReturnsStatus404() throws Exception {
-		mvc.perform(get(URL_BASE.concat(PARAMETER_ID), user.getId() + 1).contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(get(URL_BASE.concat(PARAMETER_ID), ID_INVALID).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}
 
@@ -140,7 +141,7 @@ public class UserControllerTest {
 		userDto.setName("name 2");
 		userDto.setEmail("email 2");
 
-		mvc.perform(put(URL_BASE.concat(PARAMETER_ID), user.getId() + 1).contentType(MediaType.APPLICATION_JSON)
+		mvc.perform(put(URL_BASE.concat(PARAMETER_ID), ID_INVALID).contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(userDto))).andExpect(status().isNoContent());
 	}
 
@@ -156,7 +157,7 @@ public class UserControllerTest {
 
 	@Test
 	public void testDelete_whenNotFound_thenReturnsStatus204() throws Exception {
-		mvc.perform(delete(URL_BASE.concat(PARAMETER_ID), user.getId() + 1).contentType(MediaType.APPLICATION_JSON))
+		mvc.perform(delete(URL_BASE.concat(PARAMETER_ID), ID_INVALID).contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNoContent());
 	}
 
