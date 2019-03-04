@@ -50,8 +50,14 @@ public class UserControllerTest {
 	}
 
 	@Test
-	public void testList() throws Exception {
+	public void testList_whenNotEmpty_thenReturnsStatus200() throws Exception {
 		mvc.perform(get(URL_BASE).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+	}
+
+	@Test
+	public void testList_whenEmpty_thenReturnsStatus204() throws Exception {
+		repository.deleteAll();
+		mvc.perform(get(URL_BASE).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
 	}
 
 	@Test

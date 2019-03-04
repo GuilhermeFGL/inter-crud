@@ -20,6 +20,8 @@ public class DigitDto {
 	@Pattern(regexp = Constants.REGEX_DIGIT)
 	private String n;
 
+	private Integer result;
+
 	public Integer getK() {
 		return k;
 	}
@@ -34,6 +36,14 @@ public class DigitDto {
 
 	public void setN(String n) {
 		this.n = n;
+	}
+
+	public Integer getResult() {
+		return result;
+	}
+
+	public void setResult(Integer result) {
+		this.result = result;
 	}
 
 }

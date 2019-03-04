@@ -32,8 +32,8 @@ public class UserController {
 
 	@GetMapping
 	public ResponseEntity<List<UserDto>> list() {
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(service.list().stream().map(UserMapper::toDto).collect(Collectors.toList()));
+		List<UserDto> users = service.list().stream().map(UserMapper::toDto).collect(Collectors.toList());
+		return ResponseEntity.status(users.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK).body(users);
 	}
 
 	@GetMapping(value = "/{id}")
