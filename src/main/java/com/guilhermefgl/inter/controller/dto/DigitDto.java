@@ -46,4 +46,35 @@ public class DigitDto {
 		this.result = result;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((k == null) ? 0 : k.hashCode());
+		result = prime * result + ((n == null) ? 0 : n.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DigitDto other = (DigitDto) obj;
+		if (k == null) {
+			if (other.k != null)
+				return false;
+		} else if (!k.equals(other.k))
+			return false;
+		if (n == null) {
+			if (other.n != null)
+				return false;
+		} else if (!n.equals(other.n))
+			return false;
+		return true;
+	}
+
 }
