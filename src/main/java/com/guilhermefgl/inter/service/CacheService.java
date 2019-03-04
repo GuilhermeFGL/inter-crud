@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.guilhermefgl.inter.controller.dto.DigitDto;
 
 @Service
-public class CachService {
+public class CacheService {
 
 	private static final int CACHE_LIMIT = 10;
 	private static final Map<DigitDto, Integer> CACHE = new LinkedHashMap<DigitDto, Integer>();

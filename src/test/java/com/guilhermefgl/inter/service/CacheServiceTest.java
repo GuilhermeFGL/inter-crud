@@ -13,10 +13,10 @@ import com.guilhermefgl.inter.controller.dto.DigitDto;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class CachServiceTest {
+public class CacheServiceTest {
 
 	@Autowired
-	private CachService cache;
+	private CacheService cache;
 
 	@Test
 	public void testCache() {

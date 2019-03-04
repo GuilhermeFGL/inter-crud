@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.guilhermefgl.inter.controller.dto.DigitDto;
 import com.guilhermefgl.inter.model.Digit;
 import com.guilhermefgl.inter.model.User;
+import com.guilhermefgl.inter.service.CacheService;
 import com.guilhermefgl.inter.service.DigitService;
 import com.guilhermefgl.inter.service.UserService;
 import com.guilhermefgl.inter.util.mapper.DigitMapper;
@@ -34,6 +35,9 @@ public class DigitController {
 
 	@Autowired
 	private UserService userService;
+
+	@Autowired
+	private CacheService cacheService;
 
 	@GetMapping
 	public ResponseEntity<List<DigitDto>> list(@Nullable @RequestHeader("user") Long userId) {
@@ -62,8 +66,12 @@ public class DigitController {
 			user = userOpt.get();
 		}
 
-		Integer result = digitDto.getK() == null ? digitService.uniqueDigit(digitDto.getN())
-				: digitService.uniqueDigit(digitDto.getK(), digitDto.getN());
+		Integer result = cacheService.get(digitDto);
+		if (result == null) {
+			result = digitDto.getK() == null ? digitService.uniqueDigit(digitDto.getN())
+					: digitService.uniqueDigit(digitDto.getK(), digitDto.getN());
+			cacheService.put(digitDto, result);
+		}
 
 		Digit digit = DigitMapper.toModel(digitDto);
 		digit.setDigit(result);
