@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.guilhermefgl.inter.model.Digit;
 import com.guilhermefgl.inter.model.User;
-import com.guilhermefgl.inter.model.dao.DigitRepository;
-import com.guilhermefgl.inter.model.dao.UserRepository;
+import com.guilhermefgl.inter.model.repositories.DigitRepository;
+import com.guilhermefgl.inter.model.repositories.UserRepository;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.guilhermefgl.inter.model.User;
-import com.guilhermefgl.inter.model.dao.UserRepository;
+import com.guilhermefgl.inter.model.repositories.UserRepository;
 
 @Service
 public class UserService {

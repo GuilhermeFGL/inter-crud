@@ -1,4 +1,4 @@
-package com.guilhermefgl.inter.model.dao;
+package com.guilhermefgl.inter.model.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

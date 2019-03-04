@@ -6,18 +6,24 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
 import com.guilhermefgl.inter.util.Constants;
 
 public class DigitDto {
 
 	@Min(1)
 	@Max(1000000)
+	@JsonProperty
+	@JsonPropertyDescription("inteiro representando o número de vezes da concatenação")
 	private Integer k;
 
-	@Min(1)
 	@NotNull
 	@NotEmpty
+	@Min(1)
 	@Pattern(regexp = Constants.REGEX_DIGIT)
+	@JsonProperty
+	@JsonPropertyDescription("string representado um inteiro")
 	private String n;
 
 	private Integer result;

@@ -3,16 +3,25 @@ package com.guilhermefgl.inter.controller.dto;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyDescription;
+
 public class UserDto {
 
+	@JsonProperty
+	@JsonPropertyDescription("chave única do usuário")
 	private Long id;
 
 	@NotNull
 	@NotEmpty
+	@JsonProperty
+	@JsonPropertyDescription("nome do usuario")
 	private String name;
 
 	@NotNull
 	@NotEmpty
+	@JsonProperty
+	@JsonPropertyDescription("email do usuario")
 	private String email;
 
 	public Long getId() {

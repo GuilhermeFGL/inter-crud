@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.guilhermefgl.inter.controller.dto.UserDto;
 import com.guilhermefgl.inter.model.User;
-import com.guilhermefgl.inter.model.dao.UserRepository;
+import com.guilhermefgl.inter.model.repositories.UserRepository;
 
 @SpringBootTest
 @AutoConfigureMockMvc

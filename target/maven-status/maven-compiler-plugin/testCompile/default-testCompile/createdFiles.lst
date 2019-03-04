@@ -1,0 +1,8 @@
+com/guilhermefgl/inter/service/CacheServiceTest.class
+com/guilhermefgl/inter/util/mapper/UserMapperTest.class
+com/guilhermefgl/inter/controller/DigitControllerTest.class
+com/guilhermefgl/inter/InterApplicationTests.class
+com/guilhermefgl/inter/controller/UserControllerTest.class
+com/guilhermefgl/inter/service/UserServiceTest.class
+com/guilhermefgl/inter/util/mapper/DigitMapperTest.class
+com/guilhermefgl/inter/service/DigitServiceTest.class
