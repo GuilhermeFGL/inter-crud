@@ -54,8 +54,19 @@ public class DigitControllerTest {
 	}
 
 	@Test
-	public void testList_whenEmpty_thenReturnStatus204() throws Exception {
+	public void testList_whenNoId_thenReturnStatus400() throws Exception {
+		mvc.perform(get(URL_BASE).contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+	}
+
+	@Test
+	public void testList_whenInvalidId_thenReturnStatus403() throws Exception {
 		mvc.perform(get(URL_BASE).contentType(MediaType.APPLICATION_JSON).header(HEADER_PARAM_USER, ID_INVALID))
+				.andExpect(status().isForbidden());
+	}
+
+	@Test
+	public void testList_whenEmpty_thenReturnStatus204() throws Exception {
+		mvc.perform(get(URL_BASE).contentType(MediaType.APPLICATION_JSON).header(HEADER_PARAM_USER, user.getId()))
 				.andExpect(status().isNoContent());
 	}
 
