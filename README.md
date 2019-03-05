@@ -13,7 +13,7 @@ Spring Boot REST Application for User and Unique Digit CRUD
  http://localhost:8080/
  [HEADER] Content-Type: application/json
 ```
-### Clients CRUD
+### User CRUD
 
 - **List Users**
 ```
@@ -46,6 +46,8 @@ Spring Boot REST Application for User and Unique Digit CRUD
 ```
 [DELETE] api/usuario/{Integer}
 ```
+
+### Digits CRUD
 
 - **List Digit**
 ```
