@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,31 +46,35 @@ public class DigitController {
 
 	@ApiOperation(value = "list", notes = "lista dígitos únicos de um usuário")
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = List.class),
-			@ApiResponse(code = 204, message = "NO CONTENT", response = List.class) })
+			@ApiResponse(code = 204, message = "NO CONTENT"), @ApiResponse(code = 403, message = "FORBIDDEN") })
 	@GetMapping
-	public ResponseEntity<List<DigitDto>> list(
-			@ApiParam(value = "id do usuário") @Nullable @RequestHeader("user") Long userId) {
+	public ResponseEntity<List<DigitDto>> list(@ApiParam(value = "id do usuário") @RequestHeader("user") Long userId) {
 		List<Digit> digits = new ArrayList<>();
-		if (userId != null) {
-			Optional<User> userOtp = userService.find(userId);
-			if (userOtp.isPresent()) {
-				digits = digitService.listByUser(userOtp.get());
-			}
+
+		Optional<User> userOtp = userService.find(userId);
+		if (userOtp.isPresent()) {
+			digits = digitService.listByUser(userOtp.get());
+		} else {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
 		}
 
 		List<DigitDto> result = digits.stream().map(DigitMapper::toDto).collect(Collectors.toList());
 
-		return ResponseEntity.status(result.isEmpty() ? HttpStatus.NO_CONTENT : HttpStatus.OK).body(result);
+		if (result.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+		} else {
+			return ResponseEntity.status(HttpStatus.OK).body(result);
+		}
 	}
 
 	@ApiOperation(value = "create", notes = "calcula dígito único opcionalmente referecia ao usuário")
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "CREATED", response = Integer.class),
-			@ApiResponse(code = 403, message = "FORBIDDEN"),
-			@ApiResponse(code = 400, message = "BAD REQUEST", response = ValidationErrorResponse.class) })
+			@ApiResponse(code = 400, message = "BAD REQUEST", response = ValidationErrorResponse.class),
+			@ApiResponse(code = 403, message = "FORBIDDEN") })
 	@PostMapping
 	public ResponseEntity<Integer> create(
 			@ApiParam(value = "parâmetros do dígito único") @Valid @RequestBody DigitDto digitDto,
-			@ApiParam(value = "usuário associado ao dígito único") @Nullable @RequestHeader("user") Long userId) {
+			@ApiParam(value = "usuário associado ao dígito único") @RequestHeader(value = "user", required = false) Long userId) {
 		User user = null;
 		if (userId != null) {
 			Optional<User> userOpt = userService.find(userId);

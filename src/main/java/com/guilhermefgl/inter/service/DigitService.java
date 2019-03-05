@@ -29,7 +29,7 @@ public class DigitService {
 
 	public Integer uniqueDigit(String digit) {
 		Integer result = sumDigits(digit);
-		while (result > DECIMAL) {
+		while (result >= DECIMAL) {
 			result = sumDigits(result.toString());
 		}
 		return result;
