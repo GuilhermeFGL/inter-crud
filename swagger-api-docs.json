@@ -1,1 +1,439 @@
-{"swagger":"2.0","info":{"description":"Banco Inter - Desafio Dígito Único","version":"1.0.0","title":"CRUD Usuario e Dígito Único"},"host":"localhost:8080","basePath":"/","tags":[{"name":"digit-controller","description":"Digit Controller"},{"name":"user-controller","description":"User Controller"}],"paths":{"/api/digitoUnico":{"get":{"tags":["digit-controller"],"summary":"list","description":"lista dígitos únicos de um usuário","operationId":"listUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"user","in":"header","description":"id do usuário","required":false,"type":"integer","format":"int64"}],"responses":{"200":{"description":"OK","schema":{"type":"array","items":{"type":"object"}}},"204":{"description":"NO CONTENT","schema":{"type":"array","items":{"$ref":"#/definitions/DigitDto"}}},"401":{"description":"Unauthorized"},"403":{"description":"FORBIDDEN"},"404":{"description":"Not Found"}}},"post":{"tags":["digit-controller"],"summary":"create","description":"calcula dígito único opcionalmente referecia ao usuário","operationId":"createUsingPOST","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"digitDto","description":"parâmetros do dígito único","required":false,"schema":{"$ref":"#/definitions/DigitDto"}},{"name":"user","in":"header","description":"usuário associado ao dígito único","required":false,"type":"integer","format":"int64"}],"responses":{"200":{"description":"OK","schema":{"type":"integer","format":"int32"}},"201":{"description":"CREATED","schema":{"type":"integer","format":"int32"}},"400":{"description":"BAD REQUEST","schema":{"$ref":"#/definitions/ValidationErrorResponse"}},"401":{"description":"Unauthorized"},"403":{"description":"FORBIDDEN"},"404":{"description":"Not Found"}}}},"/api/usuario":{"get":{"tags":["user-controller"],"summary":"list","description":"lista usuários cadastrados","operationId":"listUsingGET_1","consumes":["application/json"],"produces":["*/*"],"responses":{"200":{"description":"OK","schema":{"type":"array","items":{"type":"object"}}},"204":{"description":"NO CONTENT","schema":{"type":"array","items":{"type":"object"}}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}},"post":{"tags":["user-controller"],"summary":"create","description":"cadastra usuário","operationId":"createUsingPOST_1","consumes":["application/json"],"produces":["*/*"],"parameters":[{"in":"body","name":"userDto","description":"corpo do usuário","required":false,"schema":{"$ref":"#/definitions/UserDto"}}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/UserDto"}},"201":{"description":"CREATED","schema":{"$ref":"#/definitions/UserDto"}},"400":{"description":"BAD REQUEST","schema":{"$ref":"#/definitions/ValidationErrorResponse"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}}},"/api/usuario/{id}":{"get":{"tags":["user-controller"],"summary":"find","description":"recupera usuário cadastrado","operationId":"findUsingGET","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id do usuário","required":false,"type":"integer","format":"int64"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/UserDto"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"NOT FOUND"}}},"put":{"tags":["user-controller"],"summary":"update","description":"atualiza usuário cadastrado","operationId":"updateUsingPUT","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id do usuário","required":false,"type":"integer","format":"int64"},{"in":"body","name":"userDto","description":"corpo do usuário","required":false,"schema":{"$ref":"#/definitions/UserDto"}}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/UserDto"}},"201":{"description":"Created"},"204":{"description":"NO CONTENT","schema":{"$ref":"#/definitions/UserDto"}},"400":{"description":"BAD REQUEST","schema":{"$ref":"#/definitions/ValidationErrorResponse"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"},"404":{"description":"Not Found"}}},"delete":{"tags":["user-controller"],"summary":"delete","description":"deleta usuário cadastrado","operationId":"deleteUsingDELETE","consumes":["application/json"],"produces":["*/*"],"parameters":[{"name":"id","in":"path","description":"id do usuário","required":false,"type":"integer","format":"int64"}],"responses":{"200":{"description":"OK","schema":{"$ref":"#/definitions/UserDto"}},"204":{"description":"NO CONTENT","schema":{"$ref":"#/definitions/UserDto"}},"401":{"description":"Unauthorized"},"403":{"description":"Forbidden"}}}}},"definitions":{"DigitDto":{"type":"object","properties":{"k":{"type":"integer","format":"int32"},"n":{"type":"string"},"result":{"type":"integer","format":"int32"}}},"UserDto":{"type":"object","properties":{"email":{"type":"string"},"id":{"type":"integer","format":"int64"},"name":{"type":"string"}}},"ValidationErrorResponse":{"type":"object","properties":{"violations":{"type":"object","additionalProperties":{"type":"array","items":{"type":"string"}}}}}}}
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Banco Inter - Desafio Dígito Único",
+		"version": "1.0.0",
+		"title": "CRUD Usuario e Dígito Único"
+	},
+	"host": "localhost:8080",
+	"basePath": "/",
+	"tags": [
+		{
+			"name": "digit-controller",
+			"description": "Digit Controller"
+		},
+		{
+			"name": "user-controller",
+			"description": "User Controller"
+		}
+	],
+	"paths": {
+		"/api/digitoUnico": {
+			"get": {
+				"tags": [
+					"digit-controller"
+				],
+				"summary": "list",
+				"description": "lista dígitos únicos de um usuário",
+				"operationId": "listUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "user",
+						"in": "header",
+						"description": "id do usuário",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "object"
+							}
+						}
+					},
+					"204": {
+						"description": "NO CONTENT",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/DigitDto"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "FORBIDDEN"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"digit-controller"
+				],
+				"summary": "create",
+				"description": "calcula dígito único opcionalmente referecia ao usuário",
+				"operationId": "createUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "digitDto",
+						"description": "parâmetros do dígito único",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/DigitDto"
+						}
+					},
+					{
+						"name": "user",
+						"in": "header",
+						"description": "usuário associado ao dígito único",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					"201": {
+						"description": "CREATED",
+						"schema": {
+							"type": "integer",
+							"format": "int32"
+						}
+					},
+					"400": {
+						"description": "BAD REQUEST",
+						"schema": {
+							"$ref": "#/definitions/ValidationErrorResponse"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "FORBIDDEN"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/usuario": {
+			"get": {
+				"tags": [
+					"user-controller"
+				],
+				"summary": "list",
+				"description": "lista usuários cadastrados",
+				"operationId": "listUsingGET_1",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "object"
+							}
+						}
+					},
+					"204": {
+						"description": "NO CONTENT",
+						"schema": {
+							"type": "array",
+							"items": {
+								"type": "object"
+							}
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"user-controller"
+				],
+				"summary": "create",
+				"description": "cadastra usuário",
+				"operationId": "createUsingPOST_1",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "userDto",
+						"description": "corpo do usuário",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"201": {
+						"description": "CREATED",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"400": {
+						"description": "BAD REQUEST",
+						"schema": {
+							"$ref": "#/definitions/ValidationErrorResponse"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			}
+		},
+		"/api/usuario/{id}": {
+			"get": {
+				"tags": [
+					"user-controller"
+				],
+				"summary": "find",
+				"description": "recupera usuário cadastrado",
+				"operationId": "findUsingGET",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id do usuário",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "NOT FOUND"
+					}
+				}
+			},
+			"put": {
+				"tags": [
+					"user-controller"
+				],
+				"summary": "update",
+				"description": "atualiza usuário cadastrado",
+				"operationId": "updateUsingPUT",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id do usuário",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"in": "body",
+						"name": "userDto",
+						"description": "corpo do usuário",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"201": {
+						"description": "Created"
+					},
+					"204": {
+						"description": "NO CONTENT",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"400": {
+						"description": "BAD REQUEST",
+						"schema": {
+							"$ref": "#/definitions/ValidationErrorResponse"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					},
+					"404": {
+						"description": "Not Found"
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"user-controller"
+				],
+				"summary": "delete",
+				"description": "deleta usuário cadastrado",
+				"operationId": "deleteUsingDELETE",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "id",
+						"in": "path",
+						"description": "id do usuário",
+						"required": false,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"204": {
+						"description": "NO CONTENT",
+						"schema": {
+							"$ref": "#/definitions/UserDto"
+						}
+					},
+					"401": {
+						"description": "Unauthorized"
+					},
+					"403": {
+						"description": "Forbidden"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"DigitDto": {
+			"type": "object",
+			"properties": {
+				"k": {
+					"type": "integer",
+					"format": "int32"
+				},
+				"n": {
+					"type": "string"
+				},
+				"result": {
+					"type": "integer",
+					"format": "int32"
+				}
+			}
+		},
+		"UserDto": {
+			"type": "object",
+			"properties": {
+				"email": {
+					"type": "string"
+				},
+				"id": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"name": {
+					"type": "string"
+				}
+			}
+		},
+		"ValidationErrorResponse": {
+			"type": "object",
+			"properties": {
+				"violations": {
+					"type": "object",
+					"additionalProperties": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		}
+	}
+}
