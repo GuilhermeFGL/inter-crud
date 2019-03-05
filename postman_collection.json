@@ -1,0 +1,943 @@
+{
+	"info": {
+		"_postman_id": "6de0d417-6f5f-4308-a325-7643c88438dc",
+		"name": "inter-crud",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "user endpoints",
+			"item": [
+				{
+					"name": "list user - 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c81c6d81-6f16-4248-a617-85b46458784e",
+								"exec": [
+									"tests[\"Status 204\"] = responseCode.code == 204;",
+									"tests[\"Body is empty\"] = responseBody.length==0;",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user - 400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecfe7af4-6a31-487c-bd29-297926fc4362",
+								"exec": [
+									"tests[\"Status 400\"] = responseCode.code == 400;",
+									"",
+									"pm.test(\"Response contains expected fields (violations)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json).to.have.property('violations');",
+									"});",
+									"",
+									"pm.test(\"Response contains expected fields (name, email)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json.violations).to.have.property('name');",
+									"    pm.expect(json.violations).to.have.property('email');",
+									"});",
+									"",
+									"tests[\"Has violations\"] = responseBody.has(\"must not be empty\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\":\"\", \"email\":\"\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create user - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecfe7af4-6a31-487c-bd29-297926fc4362",
+								"exec": [
+									"tests[\"Status 201\"] = responseCode.code == 201;",
+									"",
+									"var body = JSON.parse(responseBody);",
+									"tests[\"Verify id user\"] = body.id == 1;",
+									"tests[\"Verify name user\"] = body.name == 'name';",
+									"tests[\"Verify email user\"] = body.email == 'email';",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\":\"name\", \"email\":\"email\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list user - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c81c6d81-6f16-4248-a617-85b46458784e",
+								"exec": [
+									"tests[\"Status 200\"] = responseCode.code == 200;",
+									"",
+									"var body = JSON.parse(responseBody);",
+									"tests[\"List not empty\"] = body.length > 0",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find user - 404",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c81c6d81-6f16-4248-a617-85b46458784e",
+								"exec": [
+									"tests[\"Status 404\"] = responseCode.code == 404;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "find user - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c81c6d81-6f16-4248-a617-85b46458784e",
+								"exec": [
+									"tests[\"Status 200\"] = responseCode.code == 200;",
+									"",
+									"var body = JSON.parse(responseBody);",
+									"tests[\"Verify id user\"] = body.id == 1;",
+									"tests[\"Verify name user\"] = body.name == 'name';",
+									"tests[\"Verify email user\"] = body.email == 'email';",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user - 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecfe7af4-6a31-487c-bd29-297926fc4362",
+								"exec": [
+									"tests[\"Status 204\"] = responseCode.code == 204;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\":\"name 2\", \"email\":\"email 2\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user - 400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecfe7af4-6a31-487c-bd29-297926fc4362",
+								"exec": [
+									"tests[\"Status 400\"] = responseCode.code == 400;",
+									"",
+									"pm.test(\"Response contains expected fields (violations)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json).to.have.property('violations');",
+									"});",
+									"",
+									"pm.test(\"Response contains expected fields (name, email)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json.violations).to.have.property('name');",
+									"    pm.expect(json.violations).to.have.property('email');",
+									"});",
+									"",
+									"tests[\"Has violations\"] = responseBody.has(\"must not be empty\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\":\"\", \"email\":\"\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecfe7af4-6a31-487c-bd29-297926fc4362",
+								"exec": [
+									"tests[\"Status 200\"] = responseCode.code == 200;",
+									"",
+									"var body = JSON.parse(responseBody);",
+									"tests[\"Verify id user\"] = body.id == 1;",
+									"tests[\"Verify name user\"] = body.name == 'name 2';",
+									"tests[\"Verify email user\"] = body.email == 'email 2';",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\":\"name 2\", \"email\":\"email 2\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user - 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c81c6d81-6f16-4248-a617-85b46458784e",
+								"exec": [
+									"tests[\"Status 204\"] = responseCode.code == 204;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/0",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "c81c6d81-6f16-4248-a617-85b46458784e",
+								"exec": [
+									"tests[\"Status 200\"] = responseCode.code == 200;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "digit endpoint",
+			"item": [
+				{
+					"name": "create user - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ecfe7af4-6a31-487c-bd29-297926fc4362",
+								"exec": [
+									"tests[\"Status 201\"] = responseCode.code == 201;",
+									"",
+									"var body = JSON.parse(responseBody);",
+									"tests[\"Verify id user\"] = body.id == 2;",
+									"tests[\"Verify name user\"] = body.name == 'name';",
+									"tests[\"Verify email user\"] = body.email == 'email';",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"name\":\"name\", \"email\":\"email\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/usuario/",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"usuario",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list digit - 400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e2bc648-70e5-4d5b-9c59-89e053c98b53",
+								"exec": [
+									"tests[\"Status 400\"] = responseCode.code == 400;",
+									"",
+									"pm.test(\"Response contains expected fields (violations)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json).to.have.property('violations');",
+									"});",
+									"",
+									"pm.test(\"Response contains expected fields (user)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json.violations).to.have.property('user');",
+									"});",
+									"",
+									"tests[\"Has violations\"] = responseBody.has(\"Missing request header 'user' for method parameter of type Long\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list digit - 403",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e2bc648-70e5-4d5b-9c59-89e053c98b53",
+								"exec": [
+									"tests[\"Status 403\"] = responseCode.code == 403;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"type": "text",
+								"value": "0"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list digit - 204",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e2bc648-70e5-4d5b-9c59-89e053c98b53",
+								"exec": [
+									"tests[\"Status 204\"] = responseCode.code == 204;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"value": "2",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create digit - 400",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67dce644-a52b-41a3-9128-dd8d00ac7c5e",
+								"exec": [
+									"tests[\"Status 400\"] = responseCode.code == 400;",
+									"",
+									"pm.test(\"Response contains expected fields (violations)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json).to.have.property('violations');",
+									"});",
+									"",
+									"pm.test(\"Response contains expected fields (k, n)\", function() {",
+									"    let json = pm.response.json();",
+									"    pm.expect(json.violations).to.have.property('k');",
+									"    pm.expect(json.violations).to.have.property('n');",
+									"});",
+									"",
+									"tests[\"Has violations\"] = responseBody.has(\"must be greater than or equal to 1\");",
+									"tests[\"Has violations\"] = responseBody.has(\"must match \\\"\\\\d+\\\"\");",
+									"tests[\"Has violations\"] = responseBody.has(\"must not be empty\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"k\":0, \"n\":\"\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create digit - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "67dce644-a52b-41a3-9128-dd8d00ac7c5e",
+								"exec": [
+									"tests[\"Status 201\"] = responseCode.code == 201;",
+									"tests[\"Body is result\"] = responseBody == 6;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"k\":1, \"n\":\"123\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create digit with user - 403",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64e40f8c-d0f1-4ddf-9c86-6c16d6d9f12a",
+								"exec": [
+									"tests[\"Status 201\"] = responseCode.code == 403;",
+									"tests[\"Body is empty\"] = responseBody.length==0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "user",
+								"type": "text",
+								"value": "0"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"k\":1, \"n\":\"123\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create digit with user - 201",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "64e40f8c-d0f1-4ddf-9c86-6c16d6d9f12a",
+								"exec": [
+									"tests[\"Status 201\"] = responseCode.code == 201;",
+									"tests[\"Body is result\"] = responseBody == 6;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "user",
+								"value": "2",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"k\":1, \"n\":\"123\" }"
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list digit - 200",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5e2bc648-70e5-4d5b-9c59-89e053c98b53",
+								"exec": [
+									"tests[\"Status 200\"] = responseCode.code == 200;",
+									"tests[\"Body is not empty\"] = responseBody.length > 0;"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "user",
+								"type": "text",
+								"value": "2"
+							},
+							{
+								"key": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:8080/api/digitoUnico",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"digitoUnico"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
