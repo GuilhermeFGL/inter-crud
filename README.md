@@ -1,10 +1,66 @@
-# Getting Started
+# Inter CRUD
 
-### Guides
-The following guides illustrates how to use certain features concretely:
+Spring Boot REST Application for User and Unique Digit CRUD
 
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
+**To run the Spring application:**
+` mvn spring-boot:run `
 
+**To run unit tests:**
+` mvn test `
+
+**Base URL:**
+```
+ http://localhost:8080/
+ [HEADER] Content-Type: application/json
+```
+### Clients CRUD
+
+- **List Users**
+```
+[GET] api/usuario
+```
+
+- **Find User**
+```
+[GET] api/usuario/{Integer}
+```
+
+- **Create User**
+```
+[POST] api/usuario
+[BODY] { 
+  "name": String, 
+  "email": String" 
+}
+```
+
+- **Update User**
+```
+[PUT] api/usuario/{Integer}
+[BODY] { 
+  "name": String, 
+  "email": String 
+}
+```
+- **Delete User**
+```
+[DELETE] api/usuario/{Integer}
+```
+
+- **List Digit**
+```
+[GET] api/digitoUnico
+[HEADER] user: {Integer}
+```
+
+- **Create Digit**
+```
+[POST] api/digitoUnico
+[HEADER] user: {Optional Integer}
+[BODY] { 
+  "k": Integer, 
+  "n": String containing positive number
+}
+```
+
+[GuilhermeFGL](https://www.linkedin.com/in/guilherme-faria-da-gama-lima-37baa647/)
