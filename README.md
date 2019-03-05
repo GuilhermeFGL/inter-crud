@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/GuilhermeFGL/inter-crud.svg?branch=master)](https://travis-ci.org/GuilhermeFGL/inter-crud)
+
 # Inter CRUD
 
 Spring Boot REST Application for User and Unique Digit CRUD
